@@ -1,0 +1,25 @@
+{
+  "name": "knotbeard",
+  "homepage": "https://github.com/mdrymon/knotbeard",
+  "authors": [
+    "mickael.drymon@gmail.com <mdrymon@users.noreply.github.com>"
+  ],
+  "description": "Knotbeard front",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "font-awesome": "https://github.com/FortAwesome/Font-Awesome.git#~4.5.0",
+    "jquery": "~2.1.4",
+    "metisMenu": "~2.2.0",
+    "morris.js": "morrisjs#~0.5.1"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
