@@ -1,0 +1,69 @@
+{
+  "name": "Serie",
+  "plural": "Series",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "TvDbId": {
+      "type": "number",
+      "required": true
+    },
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "ImdbId": {
+      "type": "string",
+      "required": true
+    },
+    "Lang": {
+      "type": "string"
+    },
+    "Banner": {
+      "type": "string"
+    },
+    "Overview": {
+      "type": "string"
+    },
+    "FirstAired": {
+      "type": "date"
+    },
+    "Zap2ItId": {
+      "type": "string"
+    },
+    "Actors": {
+      "type": "string"
+    },
+    "Poster": {
+      "type": "string"
+    },
+    "ContentRating": {
+      "type": "string"
+    },
+    "Genre": {
+      "type": "string"
+    },
+    "Network": {
+      "type": "string"
+    },
+    "Rating": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "string"
+    },
+    "Fanart": {
+      "type": "string"
+    },
+    "LastUpdated": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
