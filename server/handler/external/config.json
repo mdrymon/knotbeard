@@ -1,0 +1,8 @@
+{
+  "database": "tvdb",
+  "image": "tvdb",
+  "torrent": "cpasbien",
+  "search": {
+    "format": "s%02de%02d"
+  }
+}
