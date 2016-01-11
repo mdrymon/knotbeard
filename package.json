@@ -16,7 +16,8 @@
     "loopback-datasource-juggler": "^2.39.0",
     "loopback-storage-service": "^1.0.4",
     "node-tvdb": "^1.6.1",
-    "serve-favicon": "^2.0.1"
+    "serve-favicon": "^2.0.1",
+    "syno": "^1.0.6"
   },
   "devDependencies": {
     "jshint": "^2.5.6"
