@@ -60,10 +60,21 @@
     },
     "LastUpdated": {
       "type": "date"
+    },
+    "Episodes": {
+      "type": [
+        "object"
+      ]
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "Episodes": {
+      "type": "hasMany",
+      "model": "Episode",
+      "foreignKey": "SerieId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

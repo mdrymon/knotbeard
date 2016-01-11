@@ -1,0 +1,55 @@
+{
+  "name": "Episode",
+  "plural": "Episodes",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Season": {
+      "type": "number",
+      "required": true
+    },
+    "Index": {
+      "type": "number",
+      "required": true
+    },
+    "FirstAired": {
+      "type": "date"
+    },
+    "ImdbId": {
+      "type": "string"
+    },
+    "Lang": {
+      "type": "string"
+    },
+    "Overview": {
+      "type": "string"
+    },
+    "Rating": {
+      "type": "string"
+    },
+    "Writer": {
+      "type": "string"
+    },
+    "SerieId": {
+      "type": "number",
+      "required": true
+    },
+    "Thumbnail": {
+      "type": "string"
+    },
+    "Director": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
