@@ -35,5 +35,9 @@
   "Serie": {
     "dataSource": "db",
     "public": true
+  },
+  "Episode": {
+    "dataSource": "db",
+    "public": true
   }
 }
