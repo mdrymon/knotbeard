@@ -46,6 +46,10 @@
     },
     "Director": {
       "type": "string"
+    },
+    "Torrent": {
+      "type": "object",
+      "default": {}
     }
   },
   "validations": [],
