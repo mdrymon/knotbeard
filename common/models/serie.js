@@ -1,4 +1,3 @@
-var INTERFACE = 'external';
 var TOKEN_DB = 'database';
 var MODEL = 'serie';
 //@TODO:get path root, use path:join
@@ -6,8 +5,9 @@ var handler = require(process.env.PWD + '/server/handler/loader');
 module.exports = function(Serie) {
 
   // Bind methods
-  Serie.search = handler(INTERFACE, TOKEN_DB, MODEL).search; 
-  Serie.load = handler(INTERFACE, TOKEN_DB, MODEL).load; 
+  var handlerDb = handler(TOKEN_DB, MODEL);
+  Serie.search = handlerDb.search; 
+  Serie.load = handlerDb.load; 
 
   // Remote methods     
   Serie.remoteMethod(
@@ -16,7 +16,7 @@ module.exports = function(Serie) {
        // Remote database Id
        accepts: [{arg: 'id', type: 'number'}],
        returns: {arg: 'responses', type: 'object'},
-       http: {path: '/' + INTERFACE + '/' + TOKEN_DB + '/load', verb: 'post'}
+       http: {path: '/handler/' + TOKEN_DB + '/load', verb: 'post'}
     }
   ); 
   Serie.remoteMethod(
@@ -24,13 +24,13 @@ module.exports = function(Serie) {
     {
        accepts: [{arg: 'q', type: 'string'}],
        returns: {arg: 'responses', type: 'object'},
-       http: {path: '/' + INTERFACE + '/' + TOKEN_DB + '/search', verb: 'get'}
+       http: {path: '/handler/' + TOKEN_DB + '/search', verb: 'get'}
     }
   ); 
 
   // Operation hooks
   Serie.observe('before save', function filterProperties(ctx, next) {
-    handler(INTERFACE, TOKEN_DB, MODEL).instanceAlter(ctx.instance);
+    handler(TOKEN_DB, MODEL).instanceAlter(ctx.instance);
     next();
   });
 

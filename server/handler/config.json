@@ -1,0 +1,35 @@
+{
+  "database": {
+    "provider": "tvdb"
+  },
+  "image": {
+    "provider": "tvdb"
+  },
+  "torrent": {
+    "provider": "cpasbien"
+  },
+  "parser": {
+    "provider": "readtorrent"
+  },
+  "scan": {
+    "provider": "find",
+    "options": {
+      "directory": "/tmp",
+      "format": "s%02.2de%02.2d"
+    }
+  },
+  "download": {
+    "provider": "filesystem",
+    "options": {
+      "directory": "/tmp"
+    }
+  },
+  "move": {
+    "provider": "mv",
+    "options": {
+      "directory": "/tmp"
+    }
+  },
+  "search": {
+  }
+}
