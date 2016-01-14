@@ -11,7 +11,8 @@ var PROPERTIES_MAPPING = {
 };
 var tvdb = new TVDB("8163E782045ED7FB", 'en');
 
-module.exports = function (config) {
+module.exports = function (options) {
+  var defaultStatus = options.status || "WANTED";
   return {
     load: function(id, cb) {
       var self = this;
@@ -21,8 +22,9 @@ module.exports = function (config) {
         var episodes = response.Episodes;
         delete response.Episodes;
         self.create(response, function (err, serie) {
-          for(var index = 0; index < episodes.length; index++) {
+          for (var index = 0; index < episodes.length; index++) {
             episodes[index]["SerieId"] = serie.id;
+            episodes[index]["Status"] = defaultStatus;
           }
           Episode.create(episodes, function (err, episodes) {
             cb(null, response);
