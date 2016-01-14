@@ -12,8 +12,9 @@ module.exports = function (options) {
       var filename = url.parse(link).pathname.split('/').pop();
       if (filename) {
         var data = request(link).pipe(fs.createWriteStream(path.join(options.directory, filename)));
-        cb(null, {success: true});
+        return cb(null, {success: true});
       }
+      return cb(new Error('Torrent file failure.'));
     }
   }
 }

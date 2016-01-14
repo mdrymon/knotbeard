@@ -49,11 +49,11 @@
     },
     "Torrent": {
       "type": "object",
-      "default": {}
+      "default": []
     },
     "Status": {
       "type": "string",
-      "enum": ["WANTED", "FOUND", "DOWNLOADED"],
+      "enum": ["WANTED", "GOT", "PARSED", "PROCESSED", "DOWNLOADED", "MOVED"],
       "default": "WANTED"
     }
   },
