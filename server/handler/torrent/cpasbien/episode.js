@@ -12,11 +12,10 @@ module.exports = function (options) {
   var prefixAndSuffix = function (element) {
     return options.regex.prefix + element + options.regex.suffix;
   };
-  options.quality = options.quality.map(prefixAndSuffix);
-  options.language = options.language.map(prefixAndSuffix);
-
-  var regLanguage = new RegExp(options.language.join('|'), 'igm');
-  var regQuality = new RegExp(options.quality.join('|'), 'igm');
+  var quality = options.quality.map(prefixAndSuffix);
+  var language = options.language.map(prefixAndSuffix);
+  var regLanguage = new RegExp(language.join('|'), 'igm');
+  var regQuality = new RegExp(quality.join('|'), 'igm');
   return {
     search: function(query, mode, cb) {
 
@@ -42,12 +41,15 @@ module.exports = function (options) {
         $ = cheerio.load(body);
         content = [];
         for(var count = 0; count < $("div .ligne0, div .ligne1").length && count < limit; count++) {
+          data.index = count + 1;
           title = $($("div .ligne0, div .ligne1")[count]).children("a").text();
           data.link = $($("div .ligne0, div .ligne1")[count]).children("a").attr('href');
           data.link = url.parse(data.link).pathname.split('/').pop().split('.').shift();
           data.link = BASE_URL + util.format(TORRENT_URI, data.link);
           data.title = title;
-          data.index = count + 1;
+          data.query = query;
+          data.filters = {};
+          data.status = -1; // status -1 not processed, 0 processed, 1 failed
           content.push(JSON.parse(JSON.stringify(data)));
           data = {};
         }
@@ -55,6 +57,7 @@ module.exports = function (options) {
         for(count = 0; count < content.length; count++) {
           if (regLanguage.test(content[count].title)) {
             contentLanguage.push(content[count]);
+            content[count].filters.language = options.language;
           }
         }
         (contentLanguage.length) && (content = contentLanguage);
@@ -62,6 +65,7 @@ module.exports = function (options) {
         for(count = 0; count < content.length; count++) {
           if (regQuality.test(content[count].title)) {
             contentQuality.push(content[count]);
+            content[count].filters.quality = options.quality;
           }
         }
         (contentQuality.length) && (content = contentQuality);

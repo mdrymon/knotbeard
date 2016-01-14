@@ -9,7 +9,7 @@ module.exports = function (options) {
       var deferred = Q.defer();
       
       readTorrent(link, function(err, torrent) {
-        var data = {name:torrent.name, infoHash: torrent.infoHash};
+        var data = {};
         data.name = torrent.name || '';
         data.infoHash = torrent.infoHash || '';
         data.files = torrent.files || [];
