@@ -1,12 +1,23 @@
 {
   "database": {
-    "provider": "tvdb"
+    "provider": "tvdb",
+    "options": {
+      "status": "WANTED"
+    }
   },
   "image": {
     "provider": "tvdb"
   },
   "torrent": {
-    "provider": "cpasbien"
+    "provider": "cpasbien",
+    "options": {
+      "regex": {
+          "prefix": "\\W",
+          "suffix": "\\W"
+      },
+      "language": ["vostfr", "french", "fr"],
+      "quality": ["hdtv"]
+    }
   },
   "parser": {
     "provider": "readtorrent"
@@ -15,7 +26,7 @@
     "provider": "find",
     "options": {
       "directory": "/tmp",
-      "format": "s%02.2de%02.2d"
+      "format": "s%02de%02d"
     }
   },
   "download": {

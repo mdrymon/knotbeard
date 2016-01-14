@@ -50,6 +50,11 @@
     "Torrent": {
       "type": "object",
       "default": {}
+    },
+    "Status": {
+      "type": "string",
+      "enum": ["WANTED", "FOUND", "DOWNLOADED"],
+      "default": "WANTED"
     }
   },
   "validations": [],

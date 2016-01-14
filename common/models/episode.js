@@ -1,3 +1,5 @@
+var printf = require('printf');
+
 var TOKEN_DB = 'database';
 var TOKEN_P2P = 'torrent';
 var TOKEN_PARSE = 'parser';
@@ -6,16 +8,34 @@ var TOKEN_SC = 'scan';
 var TOKEN_MV = 'move';
 var MODEL = 'episode';
 //@TODO:get path root
-var handler = require(process.env.PWD + '/server/handler/loader');
+var api = require(process.env.PWD + '/server/handler/loader');
 
 module.exports = function(Episode) {
   
   // Bind methods
-  Episode.search = handler(TOKEN_P2P, MODEL).search;
-  Episode.torrent = handler(TOKEN_PARSE, MODEL).torrent;
-  Episode.process = handler(TOKEN_DL, MODEL).process;
-  Episode.finder = handler(TOKEN_SC, MODEL).find;
-  Episode.move = handler(TOKEN_MV, MODEL).move;
+  Episode.search = api(TOKEN_P2P, MODEL).search;
+  Episode.torrent = api(TOKEN_PARSE, MODEL).torrent;
+  Episode.process = api(TOKEN_DL, MODEL).process;
+  Episode.finder = api(TOKEN_SC, MODEL).find;
+  Episode.move = api(TOKEN_MV, MODEL).move;
+
+  // Methods
+  Episode.searchById = function (id, cb) {
+    var mode = 'sync';
+    var Serie = this.app.models.Serie;
+    this.findById(id, function (err, episode) {
+      if (episode.Status !== "WANTED") {
+        return cb(new Error("Unvalid episode status"));
+      }
+      var serieId = episode.SerieId;
+      Serie.findById(serieId, function (err, serie) {
+        if (serie) {
+          return Episode.search(serie.Name + ' ' + printf("s%02de%02d", episode.Season, episode.Index), mode, cb);
+        }
+        return cb(new Error("Internal error"));
+      });
+    });
+  }
 
   // Remote methods     
   Episode.remoteMethod(
@@ -26,9 +46,19 @@ module.exports = function(Episode) {
          {arg: 'mode', type: 'string', default:'sync'},
        ],
        returns: {arg: 'responses', type: 'object'},
-       http: {path: '/handler/' + TOKEN_P2P + '/search', verb: 'get'}
+       http: {path: '/api/' + TOKEN_P2P + '/search', verb: 'get'}
     }
-  ); 
+  );
+  Episode.remoteMethod(
+    'searchById', 
+    {
+       accepts: [
+         {arg: 'id', type: 'number'}
+       ],
+       returns: {arg: 'responses', type: 'object'},
+       http: {path: '/:id/' + TOKEN_P2P + '/search', verb: 'put'}
+    }
+  );
   Episode.remoteMethod(
     'torrent', 
     {
@@ -37,7 +67,7 @@ module.exports = function(Episode) {
          {arg: 'mode', type: 'string', default:'sync'}
        ],
        returns: {arg: 'responses', type: 'object'},
-       http: {path: '/handler/' + TOKEN_PARSE + '/torrent', verb: 'get'}
+       http: {path: '/api/' + TOKEN_PARSE + '/torrent', verb: 'get'}
     }
   ); 
   Episode.remoteMethod(
@@ -47,7 +77,7 @@ module.exports = function(Episode) {
          {arg: 'link', type: 'string'},
        ],
        returns: {arg: 'responses', type: 'object'},
-       http: {path: '/handler/' + TOKEN_DL + '/process', verb: 'post'}
+       http: {path: '/api/' + TOKEN_DL + '/process', verb: 'post'}
     }
   ); 
   Episode.remoteMethod(
@@ -57,7 +87,7 @@ module.exports = function(Episode) {
          {arg: 'exp', type: 'object'},
        ],
        returns: {arg: 'responses', type: 'object'},
-       http: {path: '/handler/' + TOKEN_SC + '/find', verb: 'get'}
+       http: {path: '/api/' + TOKEN_SC + '/find', verb: 'get'}
     }
   ); 
   Episode.remoteMethod(
@@ -68,13 +98,13 @@ module.exports = function(Episode) {
          {arg: 'req', type: 'object'}
        ],
        returns: {arg: 'responses', type: 'object'},
-       http: {path: '/handler/' + TOKEN_MV + '/file', verb: 'post'}
+       http: {path: '/api/' + TOKEN_MV + '/file', verb: 'post'}
     }
   ); 
 
   // Operation hooks
   Episode.observe('before save', function filterProperties(ctx, next) {
-    handler(TOKEN_DB, MODEL).instanceAlter(ctx.instance);
+    api(TOKEN_DB, MODEL).instanceAlter(ctx.instance);
     next();
   });
 
