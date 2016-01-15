@@ -4,13 +4,13 @@ Application that searches for and manages your TV shows based on Node.Js Strongl
 ## Installation
 Require node v4.
 
-#Branch 'Master'
+###Branch 'Master'
 ```bash
 $ npm install 
 $ cd client/default
 $ bower install
 ```
-#Branch 'Built'
+###Branch 'Built'
 ```bash
 $ node .
 ```
