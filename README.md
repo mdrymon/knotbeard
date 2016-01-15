@@ -16,19 +16,20 @@ $ node .
 ```
 
 ## Provider
-Torrent:
-  - cpasbien
-Database:
-  - thetvdb
-Downloader:
-  - All directory .torrent files scanner 
-  - Synology: DownloadStation (under construction)
+- Torrent:
+   - cpasbien
+- Database:
+   - thetvdb
+- Downloader:
+   - All directory .torrent files scanner 
+   - Synology: DownloadStation (under construction)
 
 ## Development
 Api definition:
 http://localhost:3000/explorer
 
-Workflow (/api/\* & /:id/\*):
+### Workflow (/api/\* & /:id/\*):
+
  - Serie:
    - Search: "Vikings"
    - Get the remote serie Id
