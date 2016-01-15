@@ -17,6 +17,5 @@ module.exports = function (handler, modelName) {
   if (!config[handler].options) {
     config[handler].options = {};
   }
-  console.log('PATH', './' + path.join(handler,  config[handler].provider, modelName));
   return require('./' + path.join(handler,  config[handler].provider, modelName))(config[handler].options);
 }
