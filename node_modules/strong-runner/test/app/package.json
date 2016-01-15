@@ -1,0 +1,9 @@
+{
+  "name": "test-app",
+  "version": "1.0.0",
+  "description": "test-app for strong-runner",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "repository": "http://github.com/strongloop/strong-pm"
+}
