@@ -1,15 +1,6 @@
 //@TODO:handler of remote database tv shows
 
-var TVDB = require("node-tvdb");
-var PROPERTIES_MAPPING = {
-  id: "TvDbId",
-  EpisodeName: "Name",
-  SeasonNumber: "Season",
-  EpisodeNumber: "Index",
-  IMDB_ID: "ImdbId",
-  language: "Lang"
-};
-var tvdb = new TVDB("8163E782045ED7FB", 'en');
+var tvdb = require('./kb-tvdb');
 
 module.exports = function (options) {
   return {
@@ -20,8 +11,8 @@ module.exports = function (options) {
             instance[PROPERTIES_MAPPING[prop]] = instance[prop];
             instance.unsetAttribute(prop);
           }
-        };
+        }
       }
     }
   }
-}
+};
