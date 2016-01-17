@@ -25,6 +25,7 @@
     "read-torrent": "^1.3.0",
     "request": "^2.67.0",
     "serve-favicon": "^2.0.1",
+    "strongloop": "^6.0.0",
     "syno": "^1.0.6"
   },
   "devDependencies": {
