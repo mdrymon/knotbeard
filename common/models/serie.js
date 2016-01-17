@@ -1,4 +1,6 @@
+var request = require('request');
 var TOKEN_DB = 'database';
+var TOKEN_IMG = 'image';
 var MODEL = 'serie';
 //@TODO:get path root, use path:join
 var api = require(process.env.PWD + '/server/handler/loader');
@@ -18,19 +20,25 @@ module.exports = function(Serie) {
        returns: {arg: 'responses', type: 'object'},
        http: {path: '/api/' + TOKEN_DB + '/load', verb: 'post'}
     }
-  ); 
+  );
   Serie.remoteMethod(
-    'search', 
+    'search',
     {
-       accepts: [{arg: 'q', type: 'string'}],
-       returns: {arg: 'responses', type: 'object'},
-       http: {path: '/api/' + TOKEN_DB + '/search', verb: 'get'}
+      accepts: [{arg: 'q', type: 'string'}],
+      returns: {arg: 'responses', type: 'object'},
+      http: {path: '/api/' + TOKEN_DB + '/search', verb: 'get'}
     }
-  ); 
+  );
 
   // Operation hooks
   Serie.observe('before save', function filterProperties(ctx, next) {
     api(TOKEN_DB, MODEL).instanceAlter(ctx.instance);
+    next();
+  });
+  Serie.observe('after save', function filterProperties(ctx, next) {
+    if (ctx.instance) {
+      api(TOKEN_IMG, MODEL).load(ctx.instance);
+    }
     next();
   });
 
