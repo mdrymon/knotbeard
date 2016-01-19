@@ -6,7 +6,28 @@
     }
   },
   "image": {
-    "provider": "tvdb"
+    "provider": "tvdb",
+    "options": {
+      "directory": "/tmp",
+      "urls": {
+        "poster": {
+          "link": "http://thetvdb.com/banners/posters/",
+          "suffix": "-1.jpg"
+        },
+        "banner": {
+          "link": "http://thetvdb.com/banners/graphical/",
+          "suffix": "-g2.jpg"
+        },
+        "fanart": {
+          "link": "http://thetvdb.com/banners/fanart/original/",
+          "suffix": "-1.jpg"
+        }
+      }
+    },
+                                    "season": {
+                                      "link": "http://thetvdb.com/banners/seasons/",
+                                      "suffix": "-1.jpg"
+                                    }
   },
   "torrent": {
     "provider": "cpasbien",
