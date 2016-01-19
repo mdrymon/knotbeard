@@ -303,24 +303,30 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-2 col-md-6" ng-repeat="serie in series">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="row" style="max-height:250px;overflow:hidden">
-                                <div class="col-xs-12">
-                                    <img ng-src="/images/serie_/{{serie.id}}/poster"  onerror="this.src='/img/posternotfound.png'" style="width:100%"/>
+               <div class="col-lg-1"> 
+               </div>
+               <div class="col-lg-9"> 
+                    <div class="col-lg-3 col-md-4" ng-repeat="serie in series">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row" style="max-height:280px;overflow:hidden">
+                                    <div class="col-xs-12">
+                                        <img ng-src="/images/serie/{{serie.id}}/poster"  onerror="this.src='/img/posternotfound.png'" style="width:100%"/>
+                                    </div>
                                 </div>
                             </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left" ng-bind="serie.Name">serie.Name</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left" ng-bind="serie.Name">serie.Name</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
                     </div>
-                </div>
+               </div>
+               <div class="col-lg-2"> 
+               </div>
             </div>
         </div>
         <!-- /#page-wrapper -->
