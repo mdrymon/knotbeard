@@ -325,22 +325,28 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-2 col-md-6" ng-repeat="serie in series">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <span class="pull-left" ng-bind="serie.SeriesName"><h2>serie.SeriesName</h2></span>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-body" style="max-height:280px;overflow:hidden;padding:0px;">
-                            <img ng-src="http://thetvdb.com/banners/posters/{{serie.id}}-1.jpg" onerror="this.src='/img/posternotfound.png'" style="width:100%"/>
-                        </div>
-                        <div class="panel-footer" style="padding:2px">
-                            <button style="width:100%" type="button" class="btn btn-primary">
-                              <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Save
-                            </button>
-                        </div>
-                    </div>
-                </div>
+               <div class="col-lg-1"> 
+               </div>
+               <div class="col-lg-9"> 
+                  <div class="col-lg-3 col-md-4" ng-repeat="serie in series">
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              <span class="serie-title" ng-attr-title="{{serie.SeriesName}}" ng-bind="serie.SeriesName"></span>
+                              <div class="clearfix"></div>
+                          </div>
+                          <div class="panel-body">
+                              <img ng-src="http://thetvdb.com/banners/posters/{{serie.id}}-1.jpg" onerror="this.src='/img/posternotfound.png'" style="width:100%"/>
+                          </div>
+                          <div class="panel-footer" style="padding-left:0px;padding-bottom:0px;padding-right:0px;padding-top:2px">
+                              <button style="width:100%" type="button" class="btn btn-primary" ng-click="databaseLoad(serie.id)">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Save
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+               <div class="col-lg-2"> 
+               </div>
             </div>
         </div>
         <!-- /#page-wrapper -->

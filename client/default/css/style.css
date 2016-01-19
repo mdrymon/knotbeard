@@ -8,5 +8,30 @@ a {
 }
 
 .panel-heading {
-    padding:5px;
+  padding:5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height:30px;
+}
+
+.panel-body {
+  max-height:280px;
+  overflow:hidden;
+  padding:0px;
+}
+
+.serie-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height:10px;
+}
+
+.carousel-caption {
+/*    top: 0;
+    bottom: auto;*/
+}
+
+.panel-body .label {
 }

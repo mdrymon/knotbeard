@@ -7,8 +7,17 @@ module.exports = function(app) {
   var options = config.image.options;
   app.use('/images/serie/:id/:token', function (req, res, next) {
     Serie.findById(req.params.id, function (err, serie) {
-      var rs = fs.createReadStream(path.join(options.directory, serie.Name, req.params.token + '.jpg'));
-      rs.pipe(res);
+      var filePath = path.join(options.directory, serie.Name, req.params.token + '.jpg');
+      fs.access(filePath, fs.F_OK, function(err) {
+        if (!err) {
+          // Do something
+          var rs = fs.createReadStream(filePath);
+          rs.pipe(res);
+        } else {
+          // It isn't accessible
+          next(err);
+        }
+      });
     })
   });
 };

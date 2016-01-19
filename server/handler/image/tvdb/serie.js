@@ -12,7 +12,7 @@ module.exports = function (options) {
       });*/
       var index;
       var id = instance.TvDbId;
-      console.log(options.directory, instance.Name);
+      console.log('URLS', urls, options, instance.Name);
       var dir = path.join(options.directory, instance.Name);
       if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
