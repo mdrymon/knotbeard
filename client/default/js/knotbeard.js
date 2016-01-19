@@ -12,6 +12,18 @@ angular.module('knotbeard', [])
           }, function(error) {
             $scope.series = [];
           });
+    }])
+  .controller('add-serie', ['$scope', '$http',
+    function($scope, $http) {
+        $scope.databaseSearch = function () {
+          //@TODO: Get this url from handler config and img too
+          $http({method: "GET", url: "/api/Series/api/database/search?q=" + $scope.query}).
+            then(function(response) {
+              $scope.series = response.data.responses;
+            }, function(error) {
+              $scope.series = [];
+            });
+        }
     }]);
 
 

@@ -3,26 +3,8 @@ var path = require('path');
 var request = require('request');
 var fs = require('fs');
 
-var urls = {
-  poster: {
-    link: 'http://thetvdb.com/banners/posters/',
-    suffix: '-1.jpg'
-  },
-  /*season: {
-    link: 'http://thetvdb.com/banners/seasons/',
-    suffix: '-1.jpg'
-  },*/
-  banner: {
-    link: 'http://thetvdb.com/banners/graphical/',
-    suffix: '-g2.jpg'
-  },
-  fanart: {
-    link: 'http://thetvdb.com/banners/fanart/original/',
-    suffix: '-1.jpg'
-  }
-};
-
 module.exports = function (options) {
+  var urls = options.urls;
   return {
     load: function(instance, cb) {
       /*tvdb.getBanners(id, function(err, response) {
@@ -30,6 +12,7 @@ module.exports = function (options) {
       });*/
       var index;
       var id = instance.TvDbId;
+      console.log(options.directory, instance.Name);
       var dir = path.join(options.directory, instance.Name);
       if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
