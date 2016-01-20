@@ -4,7 +4,15 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  /*color: #00B7FF;*/
+}
+
+.panel-footer {
+  padding:5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height:30px;
 }
 
 .panel-heading {

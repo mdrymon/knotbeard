@@ -3,6 +3,7 @@
 
 <head>
 
+    <base href="/" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -283,10 +284,10 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Series</a>
+                        <a href="/index.html" target="_self"><i class="fa fa-dashboard fa-fw"></i> Series</a>
                     </li>
                     <li class="active">
-                        <a href="add-serie.html"><i class="fa fa-plus-square fa-fw"></i> Add a serie</a>
+                        <a href="/add-serie.html" target="_self"><i class="fa fa-plus-square fa-fw"></i> Add a serie</a>
                     </li>
                 </ul>
                 <!-- /.sidebar-collapse -->
@@ -359,6 +360,7 @@
 
     <!-- Angular -->
     <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
