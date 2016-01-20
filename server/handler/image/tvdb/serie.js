@@ -12,13 +12,11 @@ module.exports = function (options) {
       });*/
       var index;
       var id = instance.TvDbId;
-      console.log('URLS', urls, options, instance.Name);
       var dir = path.join(options.directory, instance.Name);
       if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
       }
       for (index in urls) {
-        console.log('IMG', path.join(dir, index + '.jpg'));
         request(urls[index].link + id + urls[index].suffix).pipe(fs.createWriteStream(path.join(dir, index + '.jpg')));
       }
       if (cb) {

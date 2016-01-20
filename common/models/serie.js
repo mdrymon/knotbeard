@@ -17,7 +17,7 @@ module.exports = function(Serie) {
     {
        // Remote database Id
        accepts: [{arg: 'id', type: 'number'}],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/api/' + TOKEN_DB + '/load', verb: 'post'}
     }
   );
@@ -25,7 +25,7 @@ module.exports = function(Serie) {
     'search',
     {
       accepts: [{arg: 'q', type: 'string'}],
-      returns: {arg: 'responses', type: 'object'},
+      //returns: {arg: 'responses', type: 'object'},
       http: {path: '/api/' + TOKEN_DB + '/search', verb: 'get'}
     }
   );
