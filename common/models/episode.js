@@ -185,7 +185,7 @@ module.exports = function(Episode) {
        accepts: [
          {arg: 'id', type: 'number'}
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/:id/' + TOKEN_P2P + '/search', verb: 'put'}
     }
   );
@@ -195,7 +195,7 @@ module.exports = function(Episode) {
        accepts: [
          {arg: 'id', type: 'number'}
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/:id/' + TOKEN_PARSE + '/torrent', verb: 'put'}
     }
   ); 
@@ -205,7 +205,7 @@ module.exports = function(Episode) {
        accepts: [
          {arg: 'id', type: 'number'}
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/:id/' + TOKEN_DL + '/process', verb: 'put'}
     }
   ); 
@@ -215,7 +215,7 @@ module.exports = function(Episode) {
        accepts: [
          {arg: 'id', type: 'number'}
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/:id/' + TOKEN_SC + '/find', verb: 'put'}
     }
   ); 
@@ -225,7 +225,7 @@ module.exports = function(Episode) {
        accepts: [
          {arg: 'id', type: 'number'}
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/:id/' + TOKEN_MV + '/file', verb: 'put'}
     }
   ); 
@@ -238,7 +238,7 @@ module.exports = function(Episode) {
          {arg: 'query', type: 'string'},
          {arg: 'mode', type: 'string', default:'sync'},
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/api/' + TOKEN_P2P + '/search', verb: 'get'}
     }
   );
@@ -249,7 +249,7 @@ module.exports = function(Episode) {
          {arg: 'link', type: 'string'},
          {arg: 'mode', type: 'string', default:'sync'}
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/api/' + TOKEN_PARSE + '/torrent', verb: 'get'}
     }
   ); 
@@ -259,7 +259,7 @@ module.exports = function(Episode) {
        accepts: [
          {arg: 'link', type: 'string'},
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/api/' + TOKEN_DL + '/process', verb: 'post'}
     }
   ); 
@@ -269,7 +269,7 @@ module.exports = function(Episode) {
        accepts: [
          {arg: 'exp', type: 'object'},
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/api/' + TOKEN_SC + '/find', verb: 'get'}
     }
   ); 
@@ -280,7 +280,7 @@ module.exports = function(Episode) {
          {arg: 'file', type: 'string'},
          {arg: 'req', type: 'object'}
        ],
-       returns: {arg: 'responses', type: 'object'},
+       //returns: {arg: 'responses', type: 'object'},
        http: {path: '/api/' + TOKEN_MV + '/file', verb: 'post'}
     }
   ); 

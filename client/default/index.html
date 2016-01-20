@@ -3,6 +3,7 @@
 
 <head>
 
+    <base href="/" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -283,10 +284,10 @@
                         <!-- /input-group -->
                     </li>
                     <li class="active">
-                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Series</a>
+                        <a href="/index.html" target="_self"><i class="fa fa-dashboard fa-fw"></i> Series</a>
                     </li>
                     <li>
-                        <a href="add-serie.html"><i class="fa fa-plus-square fa-fw"></i> Add a serie</a>
+                        <a href="/add-serie.html" target="_self"><i class="fa fa-plus-square fa-fw"></i> Add a serie</a>
                     </li>
                 </ul>
                 <!-- /.sidebar-collapse -->
@@ -315,10 +316,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a ng-href="/episodes.html?id={{serie.id}}">
                                 <div class="panel-footer">
-                                    <span class="pull-left" ng-bind="serie.Name">serie.Name</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <span class="serie-title" ng-bind="serie.Name">serie.Name</span>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
@@ -339,6 +339,7 @@
 
     <!-- Angular -->
     <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
