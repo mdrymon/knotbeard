@@ -309,7 +309,7 @@
                <div class="col-lg-9"> 
                     <div class="col-lg-3 col-md-4" ng-repeat="serie in series">
                         <div class="panel panel-default">
-                            <div class="panel-body">
+                            <div class="serie panel-body">
                                 <div class="row" style="max-height:280px;overflow:hidden">
                                     <div class="col-xs-12">
                                         <img ng-src="/images/serie/{{serie.id}}/poster"  onerror="this.src='/img/posternotfound.png'" style="width:100%"/>
@@ -336,6 +336,9 @@
 
     <!-- jQuery -->
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Moment -->
+    <script src="/bower_components/moment/moment.js"></script>
 
     <!-- Angular -->
     <script src="/bower_components/angular/angular.min.js"></script>

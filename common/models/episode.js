@@ -239,7 +239,7 @@ module.exports = function(Episode) {
          {arg: 'mode', type: 'string', default:'sync'},
        ],
        //returns: {arg: 'responses', type: 'object'},
-       http: {path: '/api/' + TOKEN_P2P + '/search', verb: 'get'}
+       http: {path: '/' + TOKEN_P2P + '/search', verb: 'get'}
     }
   );
   Episode.remoteMethod(
@@ -250,7 +250,7 @@ module.exports = function(Episode) {
          {arg: 'mode', type: 'string', default:'sync'}
        ],
        //returns: {arg: 'responses', type: 'object'},
-       http: {path: '/api/' + TOKEN_PARSE + '/torrent', verb: 'get'}
+       http: {path: '/' + TOKEN_PARSE + '/torrent', verb: 'get'}
     }
   ); 
   Episode.remoteMethod(
@@ -260,7 +260,7 @@ module.exports = function(Episode) {
          {arg: 'link', type: 'string'},
        ],
        //returns: {arg: 'responses', type: 'object'},
-       http: {path: '/api/' + TOKEN_DL + '/process', verb: 'post'}
+       http: {path: '/' + TOKEN_DL + '/process', verb: 'post'}
     }
   ); 
   Episode.remoteMethod(
@@ -270,7 +270,7 @@ module.exports = function(Episode) {
          {arg: 'exp', type: 'object'},
        ],
        //returns: {arg: 'responses', type: 'object'},
-       http: {path: '/api/' + TOKEN_SC + '/find', verb: 'get'}
+       http: {path: '/' + TOKEN_SC + '/find', verb: 'get'}
     }
   ); 
   Episode.remoteMethod(
@@ -281,7 +281,7 @@ module.exports = function(Episode) {
          {arg: 'req', type: 'object'}
        ],
        //returns: {arg: 'responses', type: 'object'},
-       http: {path: '/api/' + TOKEN_MV + '/file', verb: 'post'}
+       http: {path: '/' + TOKEN_MV + '/file', verb: 'post'}
     }
   ); 
 
