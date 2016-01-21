@@ -23,7 +23,7 @@ a {
   height:30px;
 }
 
-.panel-body {
+.serie.panel-body {
   max-height:280px;
   overflow:hidden;
   padding:0px;
