@@ -335,7 +335,7 @@
                               <span class="serie-title" ng-attr-title="{{serie.SeriesName}}" ng-bind="serie.SeriesName"></span>
                               <div class="clearfix"></div>
                           </div>
-                          <div class="panel-body">
+                          <div class="serie panel-body">
                               <img ng-src="http://thetvdb.com/banners/posters/{{serie.id}}-1.jpg" onerror="this.src='/img/posternotfound.png'" style="width:100%"/>
                           </div>
                           <div class="panel-footer" style="padding-left:0px;padding-bottom:0px;padding-right:0px;padding-top:2px">
@@ -357,6 +357,9 @@
 
     <!-- jQuery -->
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Moment -->
+    <script src="/bower_components/moment/moment.js"></script>
 
     <!-- Angular -->
     <script src="/bower_components/angular/angular.min.js"></script>

@@ -17,16 +17,16 @@ module.exports = function(Serie) {
     {
        // Remote database Id
        accepts: [{arg: 'id', type: 'number'}],
-       //returns: {arg: 'responses', type: 'object'},
-       http: {path: '/api/' + TOKEN_DB + '/load', verb: 'post'}
+       returns: {root: true, type: 'object'},
+       http: {path: '/' + TOKEN_DB + '/load', verb: 'post'}
     }
   );
   Serie.remoteMethod(
     'search',
     {
       accepts: [{arg: 'q', type: 'string'}],
-      //returns: {arg: 'responses', type: 'object'},
-      http: {path: '/api/' + TOKEN_DB + '/search', verb: 'get'}
+      returns: {root: true, type: 'object'},
+      http: {path: '/' + TOKEN_DB + '/search', verb: 'get'}
     }
   );
 

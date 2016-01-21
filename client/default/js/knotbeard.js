@@ -1,32 +1,37 @@
-/**
- * Created by mx² on 15/01/16.
- */
+// jQuery
+/*$(document).ready(function() {
+    $('#dt-episodes').dataTable();
+} );*/
 
 
-angular.module('knotbeard', ['ngRoute', 'kb.controllers'])
+// Angular
+angular.module('knotbeard', ['ngRoute', 'kb.controllers', 'kb.services', 'kb.directives'])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/episodes.html', {
          templateUrl: '/episodes.html',
          controller: 'episodes'
-      }); 
-    $routeProvider
+      }) 
       .when('/add-serie.html', {
          templateUrl: '/add-serie.html',
          controller: 'add-serie'
-      });
-    $routeProvider
+      })
       .when('index.html', {
          templateUrl: 'index.html',
          controller: 'series'
       }); 
     $locationProvider.html5Mode(true).hashPrefix("!");
   }]);
+
+angular.module('kb.services', [])
+  .value('$kb_moment', moment);
+
 angular.module('kb.controllers', [])
   .controller('series', ['$scope', '$http',
     function($scope, $http) {
       $http({method: "GET", url: "/api/Series"}).
         then(function(response) {
+        console.log('R', response);
           $scope.series = response.data;
         }, function(error) {
           $scope.series = [];
@@ -37,7 +42,7 @@ angular.module('kb.controllers', [])
     function($scope, $http, $window) {
       $scope.databaseSearch = function () {
         //@TODO: Get this url from handler config and img too
-        $http({method: "GET", url: "/api/Series/api/database/search?q=" + $scope.query}).
+        $http({method: "GET", url: "/api/Series/database/search?q=" + $scope.query}).
           then(function(response) {
             $scope.series = response.data;
           }, function(error) {
@@ -47,7 +52,7 @@ angular.module('kb.controllers', [])
       $scope.databaseLoad = function (id) {
       console.log('ID', id);
         //@TODO: Get this url from handler config and img too
-        $http({method: "POST", url: "/api/Series/api/database/load", data:{id:id}}).
+        $http({method: "POST", url: "/api/Series/database/load", data:{id:id}}).
           then(function(response) {
             //$window.location.href = '/index.html';
           }, function(error) {
@@ -62,12 +67,42 @@ angular.module('kb.controllers', [])
       var id = $location.search().id;
       $http({method: "GET", url: "/api/Series/" + id + "/Episodes", data:{id:id}}).
         then(function(response) {
-      console.log('RESPONSE', response);
-          $scope.episodes = response.data;
+          var chunk = {};
+          var reverseChunk = {};
+          var episodes = response.data.reverse();
+          for (var i = 0; i < episodes.length; i++) {
+            if (!chunk[' ' + episodes[i].Season]) {
+              chunk[' ' + episodes[i].Season] = [];
+            }
+          }
+          var chunkKeys = Object.keys(chunk);
+          for (i = 0; i < chunkKeys.length; i++) {
+            if (!reverseChunk[chunkKeys[i]]) {
+              reverseChunk[chunkKeys[i]] = [];
+            }
+          }
+          for (i = 0; i < episodes.length; i++) {
+            reverseChunk[' ' + episodes[i].Season].push(episodes[i]);
+          }
+          $scope.chunks = reverseChunk;
         }, function(error) {
           $scope.episodes = [];
         });
     }
-  ])
+  ]);
+
+angular.module('kb.directives', [])
+  .directive('kbCalendar', ['$kb_moment', function ($moment) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+          var timeData = new Date();
+          if (attr['kbCalendar']) {
+            timeData = attr['kbCalendar'];
+          }
+          element.html($moment(timeData).subtract(10, 'days').calendar());
+        }
+    };
+  }])
 
 
