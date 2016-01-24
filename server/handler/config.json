@@ -33,11 +33,15 @@
     "provider": "cpasbien",
     "options": {
       "regex": {
-          "prefix": "\\W",
-          "suffix": "\\W"
+        "prefix": "\\W",
+        "suffix": "\\W"
       },
       "language": ["vostfr", "french", "fr"],
-      "quality": ["hdtv"]
+      "quality": ["hdtv"],
+      "filter": {
+        "pattern": "\\([0-9]*\\)",
+        "flags": "g"
+      }
     }
   },
   "parser": {
