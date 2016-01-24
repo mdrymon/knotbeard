@@ -19,7 +19,7 @@ module.exports = function (options) {
   return {
     search: function(query, mode, cb) {
 
-      var url_request = BASE_URL + "/recherche/" + query + ".html";
+      var url_request = BASE_URL + "/recherche/series/" + query + ".html";
       var data = {};
       var deferred = Q.defer();
       var content, contentLanguage, contentQuality;
@@ -43,6 +43,7 @@ module.exports = function (options) {
         for(var count = 0; count < $("div .ligne0, div .ligne1").length && count < limit; count++) {
           data.index = count + 1;
           title = $($("div .ligne0, div .ligne1")[count]).children("a").text();
+          //@TODO:Require a better filter, serie.Name
           data.link = $($("div .ligne0, div .ligne1")[count]).children("a").attr('href');
           data.link = url.parse(data.link).pathname.split('/').pop().split('.').shift();
           data.link = BASE_URL + util.format(TORRENT_URI, data.link);
