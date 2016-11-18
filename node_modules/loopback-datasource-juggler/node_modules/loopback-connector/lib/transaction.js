@@ -1,3 +1,8 @@
+// Copyright IBM Corp. 2015,2016. All Rights Reserved.
+// Node module: loopback-connector
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
 var assert = require('assert');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
@@ -30,7 +35,7 @@ Transaction.hookTypes = {
   AFTER_COMMIT: 'after commit',
   BEFORE_ROLLBACK: 'before rollback',
   AFTER_ROLLBACK: 'after rollback',
-  TIMEOUT: 'timeout'
+  TIMEOUT: 'timeout',
 };
 
 /**
@@ -58,12 +63,12 @@ Transaction.prototype.rollback = function(cb) {
  * @param cb
  */
 Transaction.begin = function(connector, options, cb) {
-  if (typeof isolationLevel === 'function' && cb === undefined) {
+  if (typeof options === 'function' && cb === undefined) {
     cb = options;
     options = {};
   }
   if (typeof options === 'string') {
-    options = {isolationLevel: options};
+    options = { isolationLevel: options };
   }
   var isolationLevel = options.isolationLevel || Transaction.READ_COMMITTED;
   assert(isolationLevel === Transaction.SERIALIZABLE ||

@@ -10,7 +10,6 @@ var pkgcloud = require('../../../../../lib/pkgcloud'),
     Instance = pkgcloud.providers.rackspace.database.Instance,
     User     = pkgcloud.providers.rackspace.database.User,
     errs     = require('errs'),
-    async    = require('async'),
     qs       = require('querystring');
 
 // Create a User(s) for a Database.
@@ -27,23 +26,6 @@ exports.createUser = function createUser(options, callback) {
       regex = /^\s|^\?|^@|^#| \w* \d* |'|"|`|;|,|\\|\/| \s$/,
       instanceId,
       count = 0;
-
-  // Check for options
-  if (!options || typeof options === 'function') {
-    return errs.handle(errs.create({
-      message: 'Options required for create an instance.'
-    }), options);
-  }
-
-  // Not as clean as I'd like but async didn't seem to work properly.
-  if (options instanceof Array) {
-    for (var i = 0; i < options.length; i++) {
-      assessOptions(options[i]);
-    }
-  }
-  else {
-    assessOptions(options);
-  }
 
   function assessOptions(opts) {
     var databases = [],
@@ -87,7 +69,7 @@ exports.createUser = function createUser(options, callback) {
     if (opts && opts['databases'] &&
         opts['databases'] instanceof Array &&
         opts['databases'].length > 0) {
-      opts['databases'].forEach(function (item, idx) {
+      opts['databases'].forEach(function (item) {
         if (typeof item === 'string') {
           databases.push({'name' : item});
         } else if (item instanceof Database) {
@@ -144,6 +126,23 @@ exports.createUser = function createUser(options, callback) {
     }
   }
 
+  // Check for options
+  if (!options || typeof options === 'function') {
+    return errs.handle(errs.create({
+      message: 'Options required for create an instance.'
+    }), options);
+  }
+
+  // Not as clean as I'd like but async didn't seem to work properly.
+  if (options instanceof Array) {
+    for (var i = 0; i < options.length; i++) {
+      assessOptions(options[i]);
+    }
+  }
+  else {
+    assessOptions(options);
+  }
+
   function makeRequest() {
     var createOptions = {
       method: 'POST',
@@ -198,7 +197,7 @@ exports.getUsers = function getUsers(options, callback) {
   requestOptions.qs = completeUrl;
   requestOptions.path = 'instances/' + instanceId + '/users';
 
-  this._request(requestOptions, function (err, body, res) {
+  this._request(requestOptions, function (err, body) {
     if (err) {
       return callback(err);
     }

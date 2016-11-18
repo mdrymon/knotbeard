@@ -1,3 +1,8 @@
+// Copyright IBM Corp. 2015,2016. All Rights Reserved.
+// Node module: loopback-connector
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
 var assert = require('assert');
 var PLACEHOLDER = '?';
 
@@ -55,7 +60,7 @@ ParameterizedSQL.prototype.merge = function(ps, separator) {
 ParameterizedSQL.prototype.toJSON = function() {
   return {
     sql: this.sql,
-    params: this.params
+    params: this.params,
   };
 };
 
