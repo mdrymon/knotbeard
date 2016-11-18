@@ -47,3 +47,9 @@ http://localhost:3000/explorer
 ## Templating : Ajax/Socket
 client/[template]
 
+## Recommendation
+
+```bash
+# npm install -g strongloop
+# npm install -g sqlite3
+```
