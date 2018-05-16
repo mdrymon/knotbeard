@@ -16,4 +16,7 @@
 .strong-pm
 coverage
 npm-debug.log
+node_modules
+/node_modules*
 server/storage/memory.db
+client/default/bower_components

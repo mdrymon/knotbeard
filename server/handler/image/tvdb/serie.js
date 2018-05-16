@@ -17,7 +17,9 @@ module.exports = function (options) {
         fs.mkdirSync(dir);
       }
       for (index in urls) {
-        request(urls[index].link + id + urls[index].suffix).pipe(fs.createWriteStream(path.join(dir, index + '.jpg')));
+        request(urls[index].link + id + urls[index].suffix)
+          .on('error', function(err) { console.log('IMG err', err) })
+          .pipe(fs.createWriteStream(path.join(dir, index + '.jpg')));
       }
       if (cb) {
         cb(null, {success: TRUE});

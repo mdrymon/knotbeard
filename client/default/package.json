@@ -1,0 +1,20 @@
+{
+  "dependencies" : {
+    "@bower_components/angular" : "git://github.com/angular/bower-angular.git#1.4.8",
+    "@bower_components/angular-route" : "git://github.com/angular/bower-angular-route.git#~1.4.8",
+    "@bower_components/bootstrap" : "git://github.com/twbs/bootstrap.git#~3.3.6",
+    "@bower_components/font-awesome" : "FortAwesome/Font-Awesome#~4.5.0",
+    "@bower_components/jquery" : "git://github.com/jquery/jquery-dist.git#~2.1.4",
+    "@bower_components/metisMenu" : "git://github.com/onokumus/metisMenu.git#~2.2.0",
+    "@bower_components/mocha" : "git://github.com/mochajs/mocha.git#~1.17.1",
+    "@bower_components/moment" : "git://github.com/moment/moment.git#~2.11.1",
+    "@bower_components/morris.js" : "git://github.com/morrisjs/morris.js.git#~0.5.1",
+    "@bower_components/raphael" : "git://github.com/DmitryBaranovskiy/raphael.git#>= 2.0"
+  },
+  "engines" : {
+    "yarn" : ">= 1.0.0"
+  },
+  "scripts" : {
+    "postinstall" : "node -e \"try { require('fs').symlinkSync(require('path').resolve('node_modules/@bower_components'), 'bower_components', 'junction') } catch (e) { }\""
+  }
+}

@@ -29,7 +29,7 @@ angular.module('kb.services', [])
 angular.module('kb.controllers', [])
   .controller('series', ['$scope', '$http',
     function($scope, $http) {
-      $http({method: "GET", url: "/api/Series"}).
+      $http({method: "GET", url: "/knotbeard-api/Series"}).
         then(function(response) {
         console.log('R', response);
           $scope.series = response.data;
@@ -42,7 +42,7 @@ angular.module('kb.controllers', [])
     function($scope, $http, $window) {
       $scope.databaseSearch = function () {
         //@TODO: Get this url from handler config and img too
-        $http({method: "GET", url: "/api/Series/database/search?q=" + $scope.query}).
+        $http({method: "GET", url: "/knotbeard-api/Series/database/search?q=" + $scope.query}).
           then(function(response) {
             $scope.series = response.data;
           }, function(error) {
@@ -52,7 +52,7 @@ angular.module('kb.controllers', [])
       $scope.databaseLoad = function (id) {
       console.log('ID', id);
         //@TODO: Get this url from handler config and img too
-        $http({method: "POST", url: "/api/Series/database/load", data:{id:id}}).
+        $http({method: "POST", url: "/knotbeard-api/Series/database/load", data:{id:id}}).
           then(function(response) {
             //$window.location.href = '/index.html';
           }, function(error) {
@@ -65,7 +65,7 @@ angular.module('kb.controllers', [])
   .controller('episodes', ['$scope', '$http', '$location',
     function($scope, $http, $location) {
       var id = $location.search().id;
-      $http({method: "GET", url: "/api/Series/" + id + "/Episodes", data:{id:id}}).
+      $http({method: "GET", url: "/knotbeard-api/Series/" + id + "/Episodes", data:{id:id}}).
         then(function(response) {
           var chunk = {};
           var reverseChunk = {};

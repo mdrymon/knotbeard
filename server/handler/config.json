@@ -24,10 +24,10 @@
         }
       }
     },
-                                    "season": {
-                                      "link": "http://thetvdb.com/banners/seasons/",
-                                      "suffix": "-1.jpg"
-                                    }
+    "season": {
+      "link": "http://thetvdb.com/banners/seasons/",
+      "suffix": "-1.jpg"
+    }
   },
   "torrent": {
     "provider": "cpasbien",

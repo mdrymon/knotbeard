@@ -31,11 +31,12 @@ module.exports = function(Serie) {
   );
 
   // Operation hooks
-  Serie.observe('before save', function filterProperties(ctx, next) {
+  Serie.observe('before save', function (ctx, next) {
     api(TOKEN_DB, MODEL).instanceAlter(ctx.instance);
     next();
   });
-  Serie.observe('after save', function filterProperties(ctx, next) {
+
+  Serie.observe('after save', function (ctx, next) {
     if (ctx.instance) {
       api(TOKEN_IMG, MODEL).load(ctx.instance);
     }
