@@ -3,10 +3,11 @@
     "loopback#favicon": {}
   },
   "initial": {
+    "loopback-context#per-request": {},
     "compression": {},
     "cors": {
       "params": {
-        "origin": false,
+        "origin": true,
         "credentials": true,
         "maxAge": 86400
       }
@@ -31,6 +32,11 @@
     "loopback#urlNotFound": {}
   },
   "final:after": {
-    "loopback#errorHandler": {}
+    "strong-error-handler": {
+      "params": {
+         "debug": true,
+         "log": true
+       }
+    }
   }
 }
