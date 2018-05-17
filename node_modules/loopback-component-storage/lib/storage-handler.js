@@ -10,6 +10,7 @@ var g = require('strong-globalize')();
 var IncomingForm = require('formidable');
 var StringDecoder = require('string_decoder').StringDecoder;
 var path = require('path');
+var uuid = require('uuid');
 
 var defaultOptions = {
   maxFileSize: 10 * 1024 * 1024, // 10 MB
@@ -76,6 +77,7 @@ exports.upload = function(provider, req, res, options, cb) {
       container: container,
       name: part.filename,
       type: part.mime,
+      field: part.name,
     };
 
     // Options for this file
@@ -84,6 +86,9 @@ exports.upload = function(provider, req, res, options, cb) {
     if ('function' === typeof options.getFilename) {
       file.originalFilename = file.name;
       file.name = options.getFilename(file, req, res);
+    } else if (options.nameConflict === 'makeUnique') {
+      file.originalFilename = file.name;
+      file.name = uuid.v4() + path.extname(file.name);
     }
 
     // Get allowed mime types
@@ -135,6 +140,7 @@ exports.upload = function(provider, req, res, options, cb) {
     if (file.acl) {
       uploadParams.acl = file.acl;
     }
+
     var writer = provider.upload(uploadParams);
 
     writer.on('error', function(err) {
@@ -262,24 +268,24 @@ exports.download = function(provider, req, res, container, file, cb) {
       cb = function() {}; // avoid double-callback
     });
   }
-};
 
-function setupPartialDownload(params, stats, res) {
-  var total = stats.size;
+  function setupPartialDownload(params, stats, res) {
+    var total = stats.size;
 
-  var parts = range.replace(/bytes=/, '').split('-');
-  var partialstart = parts[0];
-  var partialend = parts[1];
+    var parts = range.replace(/bytes=/, '').split('-');
+    var partialstart = parts[0];
+    var partialend = parts[1];
 
-  params.start = parseInt(partialstart, 10);
-  params.end = partialend ? parseInt(partialend, 10) : total - 1;
+    params.start = parseInt(partialstart, 10);
+    params.end = partialend ? parseInt(partialend, 10) : total - 1;
 
-  var chunksize = (params.end - params.start) + 1;
+    var chunksize = (params.end - params.start) + 1;
 
-  res.status(206);
-  res.set('Content-Range', 'bytes ' + params.start + '-' + params.end + '/' + total);
-  res.set('Accept-Ranges', 'bytes');
-  res.set('Content-Length', chunksize);
+    res.status(206);
+    res.set('Content-Range', 'bytes ' + params.start + '-' + params.end + '/' + total);
+    res.set('Accept-Ranges', 'bytes');
+    res.set('Content-Length', chunksize);
+  };
 };
 
 function processError(err, fileName) {

@@ -2,21 +2,29 @@
  * Module dependencies
  */
 
-var select = require('css-select'),
+var serialize = require('dom-serializer'),
+    defaultOptions = require('./options').default,
+    flattenOptions = require('./options').flatten,
+    select = require('css-select'),
     parse = require('./parse'),
-    serialize = require('dom-serializer'),
-    _ = require('lodash');
+    _ = {
+      merge: require('lodash/merge'),
+      defaults: require('lodash/defaults')
+    };
 
 /**
  * $.load(str)
  */
 
-exports.load = function(content, options) {
+exports.load = function(content, options, isDocument) {
   var Cheerio = require('./cheerio');
 
-  options = _.defaults(options || {}, Cheerio.prototype.options);
+  options = _.defaults(flattenOptions(options || {}), defaultOptions);
 
-  var root = parse(content, options);
+  if (isDocument === void 0)
+    isDocument = true;
+
+  var root = parse(content, options, isDocument);
 
   var initialize = function(selector, context, r, opts) {
     if (!(this instanceof initialize)) {
@@ -34,7 +42,7 @@ exports.load = function(content, options) {
   // Mimic jQuery's prototype alias for plugin authors.
   initialize.fn = initialize.prototype;
 
-  // Keep a reference to the top-level scope so we can chain methods that implicitly 
+  // Keep a reference to the top-level scope so we can chain methods that implicitly
   // resolve selectors; e.g. $("<span>").(".bar"), which otherwise loses ._root
   initialize.prototype._originalRoot = root;
 
@@ -72,8 +80,6 @@ function render(that, dom, options) {
  */
 
 exports.html = function(dom, options) {
-  var Cheerio = require('./cheerio');
-
   // be flexible about parameters, sometimes we call html(),
   // with options as only parameter
   // check dom argument for dom element specific properties
@@ -86,7 +92,7 @@ exports.html = function(dom, options) {
 
   // sometimes $.html() used without preloading html
   // so fallback non existing options to the default ones
-  options = _.defaults(options || {}, this._options, Cheerio.prototype.options);
+  options = _.defaults(flattenOptions(options || {}), this._options, defaultOptions);
 
   return render(this, dom, options);
 };
@@ -96,7 +102,7 @@ exports.html = function(dom, options) {
  */
 
 exports.xml = function(dom) {
-  var options = _.defaults({xmlMode: true}, this._options);
+  var options = _.defaults({xml: true}, this._options);
 
   return render(this, dom, options);
 };
@@ -106,7 +112,9 @@ exports.xml = function(dom) {
  */
 
 exports.text = function(elems) {
-  if (!elems) return '';
+  if (!elems) {
+    elems = this.root();
+  }
 
   var ret = '',
       len = elems.length,
@@ -115,7 +123,7 @@ exports.text = function(elems) {
   for (var i = 0; i < len; i++) {
     elem = elems[i];
     if (elem.type === 'text') ret += elem.data;
-    else if (elem.children && elem.type !== 'comment') {
+    else if (elem.children && elem.type !== 'comment' && elem.tagName !== 'script' && elem.tagName !== 'style') {
       ret += exports.text(elem.children);
     }
   }
@@ -139,7 +147,7 @@ exports.parseHTML = function(data, context, keepScripts) {
     keepScripts = context;
   }
 
-  parsed = this.load(data);
+  parsed = this.load(data, defaultOptions, false);
   if (!keepScripts) {
     parsed('script').remove();
   }
@@ -180,3 +188,47 @@ exports.contains = function(container, contained) {
 
   return false;
 };
+
+/**
+ * $.merge()
+ */
+
+exports.merge = function(arr1, arr2) {
+  if(!(isArrayLike(arr1) && isArrayLike(arr2))){
+    return;
+  }
+  var newLength = arr1.length + arr2.length;
+  var i = 0;
+  while(i < arr2.length){
+    arr1[i + arr1.length] = arr2[i];
+    i++;
+  }
+  arr1.length = newLength;
+  return arr1;
+};
+
+function isArrayLike(item){
+  if(Array.isArray(item)){
+    return true;
+  }
+  if(typeof item !== 'object'){
+    return false;
+  }
+  if(!item.hasOwnProperty('length')){
+    return false;
+  }
+  if(typeof item.length !== 'number') {
+    return false;
+  }
+  if(item.length < 0){
+    return false;
+  }
+  var i = 0;
+  while(i < item.length){
+    if(!(i in item)){
+      return false;
+    }
+    i++;
+  }
+  return true;
+}
