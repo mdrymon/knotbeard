@@ -4,9 +4,9 @@ var TVDB = require("node-tvdb");
 //@TODO:Put in config
 var PROPERTIES_MAPPING = {
   id: "TvDbId",
-  zap2it_id: "Zap2ItId",
-  SeriesName: "Name",
-  IMDB_ID: "ImdbId",
+  zap2itId: "Zap2ItId",
+  seriesName: "Name",
+  imdbId: "ImdbId",
   language: "Lang"
 };
 var tvdb = new TVDB("8163E782045ED7FB", 'en');

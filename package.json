@@ -8,27 +8,27 @@
     "pretest": "npm run lint && nsp check"
   },
   "dependencies": {
-    "cheerio": "^0.19.0",
+    "cheerio": "^1.0.0-rc.2",
     "compression": "^1.7.2",
     "cors": "^2.8.4",
     "escape-regexp": "0.0.1",
     "find": "^0.2.9",
-    "helmet": "^1.3.0",
+    "helmet": "^3.12.1",
     "loopback": "^3.19.0",
-    "loopback-boot": "^2.27.1",
+    "loopback-boot": "^3.1.0",
     "loopback-component-explorer": "^6.0.1",
     "loopback-component-storage": "^3.3.1",
     "loopback-context": "^3.3.0",
     "loopback-datasource-juggler": "^3.20.2",
     "mv": "^2.1.1",
     "node-tvdb": "^4.0.0",
-    "printf": "^0.2.5",
+    "printf": "^0.3.0",
     "q": "^1.5.1",
     "read-torrent": "^1.3.0",
     "request": "^2.86.0",
     "serve-favicon": "^2.5.0",
-    "strong-error-handler": "^1.2.1",
-    "syno": "^1.0.6"
+    "strong-error-handler": "^2.3.2",
+    "syno": "^2.1.0"
   },
   "devDependencies": {
     "jshint": "^2.9.5"

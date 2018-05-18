@@ -1,5 +1,6 @@
 {
   "name": "Episode",
+  "forceId": false,
   "plural": "Episodes",
   "base": "PersistedModel",
   "idInjection": true,

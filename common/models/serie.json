@@ -1,5 +1,6 @@
 {
   "name": "Serie",
+  "forceId": false,
   "plural": "Series",
   "base": "PersistedModel",
   "idInjection": true,
