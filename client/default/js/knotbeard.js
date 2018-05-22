@@ -69,13 +69,13 @@ angular.module('kb.controllers', [])
         then(function(response) {
           var chunk = {};
           var reverseChunk = {};
-          var episodes = response.data.reverse();
+          var episodes = response.data;
           for (var i = 0; i < episodes.length; i++) {
             if (!chunk[' ' + episodes[i].Season]) {
               chunk[' ' + episodes[i].Season] = [];
             }
           }
-          var chunkKeys = Object.keys(chunk);
+          var chunkKeys = Object.keys(chunk).reverse();
           for (i = 0; i < chunkKeys.length; i++) {
             if (!reverseChunk[chunkKeys[i]]) {
               reverseChunk[chunkKeys[i]] = [];
@@ -88,6 +88,28 @@ angular.module('kb.controllers', [])
         }, function(error) {
           $scope.episodes = [];
         });
+      $scope.runTorrent = function (episode) {
+        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/build/torrent", data:{id:id}}).
+        then(function(response) {
+          alert('ok - done');
+          episode.Status = response.data.Status;
+          console.log(response.data);
+        }, function(error) {
+          alert('ok - fail');
+          console.log(response.data);
+        });
+      }
+      $scope.runFile = function (episode) {
+        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/build/file", data:{id:id}}).
+        then(function(response) {
+          alert('ok - done');
+          episode.Status = response.data.Status;
+          console.log(response.data);
+        }, function(error) {
+          alert('ok - fail');
+          console.log(response.data);
+        });
+      }
     }
   ]);
 

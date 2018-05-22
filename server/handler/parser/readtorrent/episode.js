@@ -7,8 +7,10 @@ module.exports = function (options) {
   return {
     torrent: function (link, mode, cb) {
       var deferred = Q.defer();
-      
       readTorrent(link, function(err, torrent) {
+        if (err) {
+          return cb(err);
+        }
         var data = {};
         data.name = torrent.name || '';
         data.infoHash = torrent.infoHash || '';
@@ -18,7 +20,7 @@ module.exports = function (options) {
           return deferred.promise;
         }
         else {
-          cb(null, data);
+          return cb(null, data);
         }
       });
     }

@@ -6,6 +6,7 @@ var TOKEN_PARSE = 'parser';
 var TOKEN_DL = 'download';
 var TOKEN_SC = 'scan';
 var TOKEN_MV = 'move';
+var TOKEN_RUN = 'build';
 var MODEL = 'episode';
 //@TODO:get path root
 var api = require(process.env.PWD + '/server/handler/loader');
@@ -182,6 +183,22 @@ module.exports = function(Episode) {
       })
     });
   }
+  Episode.runTorrent = function (id, cb) {
+    Episode.searchById(id, function (err, data) {
+      Episode.torrentById(id, function (err, data) {
+        Episode.processById(id, function (err, data) {
+          cb(err, data); 
+        })  
+      })  
+    }) 
+  }
+  Episode.runFile = function (id, cb) {
+    Episode.finderById(id, function (err, data) {
+      Episode.moveById(id, function (err, data) {
+        cb(err, data); 
+      })  
+    }) 
+  }
 
   // Remote methods
 
@@ -234,6 +251,26 @@ module.exports = function(Episode) {
        ],
        returns: {root:true, type: 'object'},
        http: {path: '/:id/' + TOKEN_MV + '/file', verb: 'put'}
+    }
+  ); 
+  Episode.remoteMethod(
+    'runTorrent', 
+    {
+       accepts: [
+         {arg: 'id', type: 'number'}
+       ],
+       returns: {root:true, type: 'object'},
+       http: {path: '/:id/' + TOKEN_RUN + '/torrent', verb: 'put'}
+    }
+  ); 
+  Episode.remoteMethod(
+    'runFile', 
+    {
+       accepts: [
+         {arg: 'id', type: 'number'}
+       ],
+       returns: {root:true, type: 'object'},
+       http: {path: '/:id/' + TOKEN_RUN + '/file', verb: 'put'}
     }
   ); 
 

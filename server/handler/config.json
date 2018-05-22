@@ -30,7 +30,7 @@
     }
   },
   "torrent": {
-    "provider": "cpasbien",
+    "provider": "torrent9",
     "options": {
       "regex": {
         "prefix": "\\W",

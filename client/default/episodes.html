@@ -329,12 +329,13 @@
                                             <td><input type="checkbox" name="all" value="all"></td>
                                             <td ng-bind="episode.Index"></td>
                                             <td ng-bind="episode.Name"></td>
-                                            <td kb-calendar="{{episode.FirstAired}}"></td>
+                                            <td kb-calendar="{{episode.firstAired}}"></td>
                                             <td>fr, de</td>
                                             <td ng-bind="episode.Status"></td>
                                             <td>
-                                              <button class="btn btn-default" type="button" ng-click="" />
-                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Ok
+                                              <button class="btn btn-default" type="button" ng-click="runTorrent(episode)" />
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                 Ok
                                               </button>
 
                                             </td>
