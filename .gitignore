@@ -1,3 +1,6 @@
+# project
+server/storage/memory.db
+
 *.csv
 *.dat
 *.iml
