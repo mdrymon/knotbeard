@@ -183,6 +183,7 @@ module.exports = function(Episode) {
       })
     });
   }
+
   Episode.runTorrent = function (id, cb) {
     Episode.searchById(id, function (err, data) {
       Episode.torrentById(id, function (err, data) {

@@ -31,7 +31,6 @@ angular.module('kb.controllers', [])
     function($scope, $http) {
       $http({method: "GET", url: "/knotbeard-api/Series"}).
         then(function(response) {
-        console.log('R', response);
           $scope.series = response.data;
         }, function(error) {
           $scope.series = [];
@@ -46,6 +45,7 @@ angular.module('kb.controllers', [])
           then(function(response) {
             $scope.series = response.data;
           }, function(error) {
+            alert('search - failed');
             $scope.series = [];
           });
       }
@@ -54,9 +54,10 @@ angular.module('kb.controllers', [])
         //@TODO: Get this url from handler config and img too
         $http({method: "POST", url: "/knotbeard-api/Series/database/load", data:{id:id}}).
           then(function(response) {
+            alert('serie - loaded');
             //$window.location.href = '/index.html';
           }, function(error) {
-          console.log('ERROR', error);
+            alert('serie - failed');
             $scope.series = [];
           });
       }
@@ -89,14 +90,24 @@ angular.module('kb.controllers', [])
           $scope.episodes = [];
         });
       $scope.runTorrent = function (episode) {
-        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/build/torrent", data:{id:id}}).
+        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/torrent/search", data:{id:episode.id}}).
         then(function(response) {
-          alert('ok - done');
           episode.Status = response.data.Status;
-          console.log(response.data);
+          $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/parser/torrent", data:{id:episode.id}}).
+          then(function(response) {
+            episode.Status = response.data.Status;
+            $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/download/process", data:{id:episode.id}}).
+            then(function(response) {
+              episode.Status = response.data.Status;
+              console.log(response.data);
+            }, function(error) {
+              alert('ok - fail process');
+            });
+          }, function(error) {
+            alert('ok - fail parse');
+          });
         }, function(error) {
-          alert('ok - fail');
-          console.log(response.data);
+          alert('ok - fail search');
         });
       }
       $scope.runFile = function (episode) {
