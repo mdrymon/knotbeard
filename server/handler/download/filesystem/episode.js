@@ -10,6 +10,10 @@ module.exports = function (options) {
   return {
     process : function (link, cb) {
       var filename = url.parse(link).pathname.split('/').pop();
+      var fileExtension = '.torrent';
+      if (filename.indexOf(fileExtension) === -1) {
+         filename += fileExtension;
+      }
       if (filename) {
         var data = request(link).pipe(fs.createWriteStream(path.join(options.directory, filename)));
         return cb(null, {success: true});
