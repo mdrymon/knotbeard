@@ -1,31 +1,29 @@
-var find = require('find');
+var fs = require('fs');
 var printf = require('printf');
 var escapeRegexp = require('escape-regexp');
 
 module.exports = function (options) {
   var directory = options.directory;
-  var format = options.format; 
+  var format = options.format;
+  var extension = options.extension;
+  // @TODO use path join
   return {
     find: function (exp, cb) {
       exp = exp || {};
       var regexp;
-      //var name = exp.name || "[www.Cpasbien.me] Vikings.S01E01.FRENCH.LD.HDTV.XViD-EPZ.avi";
-      var name = exp.name || "";
-      //var query = exp.query || {serie: "vikings", version: {season: 1, episode: 1}, extension:['avi']};
-      var query = exp.query || {serie: "", version: {season: 0, episode: 0}, extension:[]};
-      var version = regstr = '';
-
-      if (!name && !query.serie) {
-        cb(new Error("Name and serie can't be empty."));
+      var path = "";
+      exp.videos = [];
+      for (var i = 0; i < exp.files.length; i++) {
+        exp.files[i].found = false;
+        path = directory + '/' + exp.files[i].path;
+        if (fs.existsSync(directory + '/' + exp.files[i].path)) {
+          exp.files[i].found = true;
+          if (extension.includes(exp.files[i].name.split('.').pop())) {
+            exp.videos.push(path);
+          }
+        }
       }
-
-      version = printf(format, query.version.season, query.version.episode);
-      regstr = "((" + escapeRegexp(name) + ")|(" + query.serie + ".*" + version + ".*(" + query.extension.join("|") + ")))";
-      regexp = new RegExp(regstr, "igm");
-
-      find.file(regexp, directory, function(files) {
-        cb(null, files);
-      })
+      cb(null, exp);
     }
   }
 }

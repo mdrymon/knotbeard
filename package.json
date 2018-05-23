@@ -12,7 +12,6 @@
     "compression": "^1.7.2",
     "cors": "^2.8.4",
     "escape-regexp": "0.0.1",
-    "find": "^0.2.9",
     "helmet": "^3.12.1",
     "loopback": "^3.19.1",
     "loopback-boot": "^3.1.0",

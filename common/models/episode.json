@@ -52,6 +52,10 @@
       "type": "object",
       "default": []
     },
+    "Videos": {
+      "type": "object",
+      "default": []
+    },
     "Status": {
       "type": "string",
       "enum": ["WANTED", "GOT", "PARSED", "PROCESSED", "DOWNLOADED", "MOVED"],

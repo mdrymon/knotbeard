@@ -2,7 +2,6 @@
 
 var readTorrent = require("read-torrent");
 var Q = require('q');
-
 module.exports = function (options) {
   return {
     torrent: function (link, mode, cb) {

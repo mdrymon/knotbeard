@@ -72,7 +72,8 @@ module.exports = function(Episode) {
           return cb(err);
         }
         if (data.name) {
-          episode.Torrent[i].file = data.name;
+          episode.Torrent[i].name = data.name;
+          episode.Torrent[i].files = data.files;
           episode.Torrent[i].hash = data.infoHash;
           return episode.updateAttributes({Status: "PARSED", Torrent: episode.Torrent}, function (err, instance) {
             cb(null, instance);
@@ -117,28 +118,27 @@ module.exports = function(Episode) {
         return cb(new Error("Unvalid episode status"));
       }
       var torrent;
-      for (var i = 0; i < episode.Torrent.length; i++) {
-        if (episode.Torrent[i].status < 1) {
-          torrent = episode.Torrent[i];
-          episode.Torrent[i].status = 0; // 0 this torrent file has been processed
-          break;
-        }
+      if (episode.Torrent[0].status < 1) {
+        torrent = episode.Torrent[0];
+        episode.Torrent[0].status = 0; // 0 this torrent file has been processed
       }
       //{"name":"The.Walking.Dead.S02E06.FRENCH.LD.HDTV.XviD-JMT", "serie":"The Walking Dead", "version": {"season":2,"episode":6}, "extension":["avi"]}
       Serie.findById(episode.SerieId, function (err, serie) {
         var exp = {
-          name: torrent.file,
+          name: torrent.name,
+          files: torrent.files,
           serie: serie.Name,
           version: {season: episode.Season, episode:episode.Index},
-          extension: ['avi']
+          videos: [],
         };
         return Episode.finder(exp, function (err, data) {
           if (err) {
             return cb(err);
           }
-          if (data.length) {
-            episode.Torrent[i].path = data.pop();
-            return episode.updateAttributes({Status: "DOWNLOADED", Torrent: episode.Torrent}, function (err, instance) {
+          if (data.files.length) {
+            episode.Torrent[0].files = data.files;
+            episode.videos = data.videos;
+            return episode.updateAttributes({Status: "DOWNLOADED", Torrent: episode.Torrent, Videos: data.videos}, function (err, instance) {
               cb(null, instance);
             })
           }
@@ -147,6 +147,7 @@ module.exports = function(Episode) {
       })
     });
   }
+
   Episode.moveById = function (id, cb) {
     var mode = 'sync';
     var Serie = this.app.models.Serie;
@@ -154,14 +155,7 @@ module.exports = function(Episode) {
       if (episode.Status !== "DOWNLOADED") {
         return cb(new Error("Unvalid episode status"));
       }
-      var torrent;
-      for (var i = 0; i < episode.Torrent.length; i++) {
-        if (episode.Torrent[i].status < 1) {
-          torrent = episode.Torrent[i];
-          episode.Torrent[i].status = 0; // 0 this torrent file has been processed
-          break;
-        }
-      }
+      var videos = episode.Videos;
       Serie.findById(episode.SerieId, function (err, serie) {
         var req = {
           serie: serie.Name,
@@ -169,16 +163,15 @@ module.exports = function(Episode) {
           episode: episode.Index,
           name: episode.Name
         };
-        return Episode.move(torrent.path, req, function (err, data) {
-          if (err) {
-            return cb(err);
-          }
-          if (data.success) {
-            return episode.updateAttributes({Status: "MOVED"}, function (err, instance) {
-              cb(null, instance);
-            })
-          }
-          return cb(new Error('Internal error.'));
+        for (var i = 0; i < videos.length; i++) {
+          Episode.move(videos[i], req, function (err, data) {
+            if (err) {
+              return cb(err);
+            }
+          })
+        }
+        return episode.updateAttributes({Status: "MOVED"}, function (err, instance) {
+           cb(null, instance);
         })
       })
     });
