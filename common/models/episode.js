@@ -34,6 +34,9 @@ module.exports = function(Episode) {
     var mode = 'sync';
     var Serie = this.app.models.Serie;
     this.findById(id, function (err, episode) {
+      if (err) {
+        return cb(err);
+      }
       if (episode.Status !== "WANTED") {
         return cb(new Error("Unvalid episode status"));
       }
@@ -192,15 +195,16 @@ module.exports = function(Episode) {
     Episode.findById(id, function(err, instance) {
       if (err)
         return cb(err);
-      if (instance.Status === "PROCESSED")
+      if (instance.Status === "PROCESSED" || instance.Status === "MOVED")
         return cb(null, instance);
       else {
-        Episode[MAPPING_STATUS[instance.Status]](id, function (err, data) {
+        self[MAPPING_STATUS[instance.Status]](id, function (err, data) {
             self.runTorrent(id, cb);
         })
       }
     })
   }
+
   Episode.runFile = function (id, cb) {
     Episode.finderById(id, function (err, data) {
       Episode.moveById(id, function (err, data) {
