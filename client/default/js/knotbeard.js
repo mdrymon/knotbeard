@@ -90,7 +90,7 @@ angular.module('kb.controllers', [])
           $scope.episodes = [];
         });
       $scope.runTorrent = function (episode) {
-        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/torrent/search", data:{id:episode.id}}).
+        /*$http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/torrent/search", data:{id:episode.id}}).
         then(function(response) {
           episode.Status = response.data.Status;
           $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/parser/torrent", data:{id:episode.id}}).
@@ -108,6 +108,13 @@ angular.module('kb.controllers', [])
           });
         }, function(error) {
           alert('ok - fail search');
+        });*/
+        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/build/torrent", data:{id:episode.id}}).
+        then(function(response) {
+          alert('ok - done');
+          episode.Status = response.data.Status;
+        }, function(error) {
+          alert('ok - fail');
         });
       }
       $scope.runFile = function (episode) {

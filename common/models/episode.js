@@ -12,6 +12,14 @@ var MODEL = 'episode';
 var api = require(process.env.PWD + '/server/handler/loader');
 var config = require('../../server/handler/config');
 
+var MAPPING_STATUS = {
+  WANTED: 'searchById',
+  GOT:'torrentById',
+  PARSED:'processById',
+  PROCESSED:'finderById',
+  DOWNLOADED:'moveById'
+}
+
 module.exports = function(Episode) {
   
   // Bind methods
@@ -86,7 +94,7 @@ module.exports = function(Episode) {
   Episode.processById = function (id, cb) {
     var mode = 'sync';
     this.findById(id, function (err, episode) {
-      if (episode.Status !== "GOT" && episode.Status !== "PARSED") {
+      if (episode.Status !== "PARSED") {
         return cb(new Error("Unvalid episode status"));
       }
       var torrent;
@@ -122,7 +130,6 @@ module.exports = function(Episode) {
         torrent = episode.Torrent[0];
         episode.Torrent[0].status = 0; // 0 this torrent file has been processed
       }
-      //{"name":"The.Walking.Dead.S02E06.FRENCH.LD.HDTV.XviD-JMT", "serie":"The Walking Dead", "version": {"season":2,"episode":6}, "extension":["avi"]}
       Serie.findById(episode.SerieId, function (err, serie) {
         var exp = {
           name: torrent.name,
@@ -136,9 +143,12 @@ module.exports = function(Episode) {
             return cb(err);
           }
           if (data.files.length) {
+            var obj = !data.videos.length ?
+              {Torrent: episode.Torrent} :
+              {Status: "DOWNLOADED", Torrent: episode.Torrent, Videos: data.videos};
             episode.Torrent[0].files = data.files;
             episode.videos = data.videos;
-            return episode.updateAttributes({Status: "DOWNLOADED", Torrent: episode.Torrent, Videos: data.videos}, function (err, instance) {
+            return episode.updateAttributes(obj, function (err, instance) {
               cb(null, instance);
             })
           }
@@ -178,13 +188,18 @@ module.exports = function(Episode) {
   }
 
   Episode.runTorrent = function (id, cb) {
-    Episode.searchById(id, function (err, data) {
-      Episode.torrentById(id, function (err, data) {
-        Episode.processById(id, function (err, data) {
-          cb(err, data); 
-        })  
-      })  
-    }) 
+    var self = this;
+    Episode.findById(id, function(err, instance) {
+      if (err)
+        return cb(err);
+      if (instance.Status === "PROCESSED")
+        return cb(null, instance);
+      else {
+        Episode[MAPPING_STATUS[instance.Status]](id, function (err, data) {
+            self.runTorrent(id, cb);
+        })
+      }
+    })
   }
   Episode.runFile = function (id, cb) {
     Episode.finderById(id, function (err, data) {
