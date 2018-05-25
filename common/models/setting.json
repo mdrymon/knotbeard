@@ -1,0 +1,27 @@
+{
+  "name": "Setting",
+  "plural": "Settings",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "forceId": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Provider": {
+      "id": true,
+      "type": "string",
+      "required": true,
+      "generated": false
+    },
+    "Config": {
+      "type": "object",
+      "required": true,
+      "default": {}
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,12 +1,12 @@
 {
   "name": "Episode",
-  "forceId": false,
   "plural": "Episodes",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
+  "forceId": false,
   "properties": {
     "Name": {
       "type": "string",
@@ -58,7 +58,14 @@
     },
     "Status": {
       "type": "string",
-      "enum": ["WANTED", "GOT", "PARSED", "PROCESSED", "DOWNLOADED", "MOVED"],
+      "enum": [
+        "WANTED",
+        "GOT",
+        "PARSED",
+        "PROCESSED",
+        "DOWNLOADED",
+        "MOVED"
+      ],
       "default": "WANTED"
     }
   },

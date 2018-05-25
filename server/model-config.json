@@ -39,5 +39,9 @@
   "Episode": {
     "dataSource": "db",
     "public": true
+  },
+  "Setting": {
+    "dataSource": "db",
+    "public": true
   }
 }

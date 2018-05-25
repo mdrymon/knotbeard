@@ -1,12 +1,12 @@
 {
   "name": "Serie",
-  "forceId": false,
   "plural": "Series",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
+  "forceId": false,
   "properties": {
     "TvDbId": {
       "type": "number",
