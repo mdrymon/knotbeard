@@ -199,6 +199,8 @@ module.exports = function(Episode) {
         return cb(null, instance);
       else {
         self[MAPPING_STATUS[instance.Status]](id, function (err, data) {
+            if (err)
+              return cb(err);
             self.runTorrent(id, cb);
         })
       }

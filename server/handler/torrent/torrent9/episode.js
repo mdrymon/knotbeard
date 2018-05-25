@@ -19,7 +19,7 @@ module.exports = function (options) {
 
       // @TODO: i18n
       query += ' french';
-      query = query.split(' ').join('-');
+      query = query.split(' ').join('-').replace(/['"&#!?.;%]/gi, '').toLowerCase();
 
       var url_request = printf(TORRENT_SEARCH_URI, query);
       var data = {};
@@ -28,7 +28,6 @@ module.exports = function (options) {
       var title = '';
 
       request(url_request, function(err, response, body) {
-       
         // Request failure
         if (err || response.statusCode !== 200) {
           return cb(new Error('Failure, there was a problem loading Torrent9 (search)'));
