@@ -118,14 +118,12 @@ angular.module('kb.controllers', [])
         });
       }
       $scope.runFile = function (episode) {
-        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/build/file", data:{id:id}}).
+        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/build/file", data:{id:episode.id}}).
         then(function(response) {
           alert('ok - done');
           episode.Status = response.data.Status;
-          console.log(response.data);
         }, function(error) {
           alert('ok - fail');
-          console.log(response.data);
         });
       }
     }
