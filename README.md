@@ -5,17 +5,19 @@ Application
  that searches for and manages your TV shows based on Node.Js Strongloop
 
 ## Installation
-Require node v4.
+Require node v9+.
 
-###Branch 'Master'
 ```bash
-$ npm install 
-$ cd client/default
-$ bower install
+$ npm install
 ```
-###Branch 'Built'
+
+## Configure handler
+Edit *server/handler/config.json*
+
+## Run
+
 ```bash
-$ node .
+$ npm start
 ```
 
 ## Provider
@@ -47,9 +49,3 @@ http://localhost:3000/explorer
 ## Templating : Ajax/Socket
 client/[template]
 
-## Recommendation
-
-```bash
-$ sudo npm install -g strongloop
-$ sudo npm install -g sqlite3
-```
