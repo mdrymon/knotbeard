@@ -317,6 +317,7 @@
                                         <tr>
                                             <th><input type="checkbox" name="all" value="all"></th>
                                             <th>#</th>
+                                            <th>Index</th>
                                             <th>Name</th>
                                             <th>Airdate</th>
                                             <th>Subtitles</th>
@@ -327,6 +328,7 @@
                                     <tbody>
                                         <tr ng-repeat="episode in episodes">
                                             <td><input type="checkbox" name="all" value="all"></td>
+                                            <td ng-bind="episode.id"></td>
                                             <td ng-bind="episode.Index"></td>
                                             <td ng-bind="episode.Name"></td>
                                             <td kb-calendar="{{episode.firstAired}}"></td>
