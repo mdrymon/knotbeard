@@ -215,7 +215,13 @@ module.exports = function(Episode) {
     }) 
   }
 
-  // Remote methods
+  Episode.resetStatus = function (id, cb) {
+    this.updateAttributes({Status: "WANTED"}, function (err, instance) {
+      cb(null, instance.Status);
+    })
+  }
+
+// Remote methods
 
   // Api wrapper By Id
   Episode.remoteMethod(
@@ -266,26 +272,6 @@ module.exports = function(Episode) {
        ],
        returns: {root:true, type: 'object'},
        http: {path: '/:id/' + TOKEN_MV + '/file', verb: 'put'}
-    }
-  ); 
-  Episode.remoteMethod(
-    'runTorrent', 
-    {
-       accepts: [
-         {arg: 'id', type: 'number'}
-       ],
-       returns: {root:true, type: 'object'},
-       http: {path: '/:id/' + TOKEN_RUN + '/torrent', verb: 'put'}
-    }
-  ); 
-  Episode.remoteMethod(
-    'runFile', 
-    {
-       accepts: [
-         {arg: 'id', type: 'number'}
-       ],
-       returns: {root:true, type: 'object'},
-       http: {path: '/:id/' + TOKEN_RUN + '/file', verb: 'put'}
     }
   ); 
 
@@ -341,6 +327,36 @@ module.exports = function(Episode) {
        ],
        returns: {root:true, type: 'object'},
        http: {path: '/' + TOKEN_MV + '/file', verb: 'post'}
+    }
+  ); 
+  Episode.remoteMethod(
+    'runTorrent', 
+    {
+       accepts: [
+         {arg: 'id', type: 'number'}
+       ],
+       returns: {root:true, type: 'object'},
+       http: {path: '/:id/' + TOKEN_RUN + '/torrent', verb: 'put'}
+    }
+  ); 
+  Episode.remoteMethod(
+    'runFile', 
+    {
+       accepts: [
+         {arg: 'id', type: 'number'}
+       ],
+       returns: {root:true, type: 'object'},
+       http: {path: '/:id/' + TOKEN_RUN + '/file', verb: 'put'}
+    }
+  ); 
+  Episode.remoteMethod(
+    'resetStatus', 
+    {
+       accepts: [
+         {arg: 'id', type: 'number'},
+       ],
+       returns: {root:true, type: 'object'},
+       http: {path: '/' + TOKEN_RUN + '/reset', verb: 'put'}
     }
   ); 
 

@@ -126,6 +126,15 @@ angular.module('kb.controllers', [])
           alert('ok - fail');
         });
       }
+      $scope.resetStatus = function (episode) {
+        $http({method: "PUT", url: "/knotbeard-api/Episodes/" + episode.id + "/build/reset", data:{id:episode.id}}).
+        then(function(response) {
+          alert('ok - done');
+          episode.Status = response.data.Status;
+        }, function(error) {
+          alert('ok - fail');
+        });
+      }
     }
   ]);
 
