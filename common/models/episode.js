@@ -356,7 +356,7 @@ module.exports = function(Episode) {
          {arg: 'id', type: 'number'},
        ],
        returns: {root:true, type: 'object'},
-       http: {path: '/' + TOKEN_RUN + '/reset', verb: 'put'}
+       http: {path: '/:id/' + TOKEN_RUN + '/reset', verb: 'put'}
     }
   ); 
 
