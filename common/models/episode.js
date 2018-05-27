@@ -216,8 +216,10 @@ module.exports = function(Episode) {
   }
 
   Episode.resetStatus = function (id, cb) {
-    this.updateAttributes({Status: "WANTED"}, function (err, instance) {
-      cb(null, instance.Status);
+    this.findById(id, function (err, episode) {
+      episode.updateAttributes({Status: "WANTED"}, function (err, instance) {
+        cb(null, instance.Status);
+      })
     })
   }
 
