@@ -20,7 +20,7 @@ module.exports = function (options) {
       }
       var extension = '.' + file.split('.').pop() || '';
       var name = ' ' + req.name || ''
-      mv(file, path.join(directory, req.serie, req.serie + ' - ' + req.season + 'x' + printf('%02d', req.episode) + name + extension), {mkdirp: true}, function (err) {
+      mv(file, path.join(directory, req.serie, req.serie + ' - ' + req.season + 'E' + printf('%02d', req.episode) + ' - ' + name + extension), {mkdirp: true}, function (err) {
         if (err) {
           cb(err);
         }
